@@ -1,0 +1,8 @@
+# 数据集配置。本项目约定：相对路径均相对于项目根目录。
+path: data/processed
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: star

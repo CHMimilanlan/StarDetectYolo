@@ -1,0 +1,6 @@
+# 如需 CUDA，请先按 README 安装与显卡驱动匹配的 PyTorch，再安装本文件。
+ultralytics>=8.3.0,<9.0.0
+opencv-python>=4.9.0
+numpy>=1.24.0
+PyYAML>=6.0.1
+

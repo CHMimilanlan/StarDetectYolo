@@ -1,0 +1,41 @@
+model: yolov8n.pt
+data: configs/dataset/star_dataset.yaml
+
+# 星点通常是小而密集的目标。先用这组保守参数建立基线，再根据 README 调参。
+train:
+  epochs: 200
+  imgsz: 1024
+  batch: -1
+  device: 0
+  workers: 4
+  patience: 50
+  pretrained: true
+  optimizer: auto
+  seed: 42
+  deterministic: true
+  amp: true
+  cache: false
+  project: runs/train
+  name: yolov8n_stars
+  exist_ok: false
+  save: true
+  save_period: 10
+  plots: true
+  val: true
+  cos_lr: true
+  close_mosaic: 20
+  single_cls: true
+
+  # 天文图像不适合强色相/饱和度扰动；旋转和翻转通常不改变星点语义。
+  hsv_h: 0.0
+  hsv_s: 0.0
+  hsv_v: 0.12
+  degrees: 180.0
+  translate: 0.05
+  scale: 0.20
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.5
+  fliplr: 0.5
+  mosaic: 0.5
+  mixup: 0.0
