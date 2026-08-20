@@ -93,6 +93,31 @@ frame_001.tif,900.0,412.0
 python -m dataset.points_to_yolo --csv data/raw/stars.csv --box-size 8
 ```
 
+也可以直接批量调用相邻项目 `RASPAstroStacker/StarExtraction` 的 `solver` API
+生成标签。先将待处理图像放入 `data/raw/images`，并安装该项目的依赖：
+
+```powershell
+python -m pip install -r ..\RASPAstroStacker\requirements.txt
+python -m dataset.extract_stars_to_yolo --box-size 8
+```
+
+默认读取 `..\RASPAstroStacker\config.yaml` 中的拉伸参数与 `solver` 检测参数，
+标签写入 `data/raw/labels`。已有标签不会被覆盖；确认重建时增加
+`--overwrite`。也可指定外部图像目录及配置：
+
+```powershell
+python -m dataset.extract_stars_to_yolo `
+  --images D:\astro\images `
+  --output-labels data\raw\labels `
+  --raspa-config ..\RASPAstroStacker\config.yaml `
+  --box-size 10
+```
+
+每张图都会生成同 basename 的 `.txt`；未检测到星点时生成空标签。输入目录
+中不能出现 basename 相同的图像，因为后续数据准备流程也以 basename 匹配图像
+和标签。加 `--debug` 可将 API 的标记图写入
+`outputs/star_extraction_debug`；批量制作正式数据时建议关闭，以免明显降低速度。
+
 框尺寸应覆盖星点的 PSF 主体，并在同一数据集中保持口径一致。通常可先尝试 6~12 像素；框太小（尤其小于约 2 像素）难以学习，框太大会增加相邻星重叠。
 
 ## 4. 划分和切片数据集
